@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GTA V Mod Library – Free Downloads</title>
+  <meta name="description" content="Kostenlose Downloads & Tools für GTA V (Demo-Startseite). Modernes Darkmode-Layout mit Karten, Suche, Kategorien und FAQ." />
+
+  <style>
+    :root{
+      --bg:#070a0f;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.09);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.72);
+      --border:rgba(255,255,255,.12);
+      --accent:#7c5cff;
+      --accent2:#00d4ff;
+      --danger:#ff4d6d;
+      --shadow:0 18px 60px rgba(0,0,0,.58);
+      --radius:18px;
+      --radius2:22px;
+      --max:1140px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(900px 400px at 20% 10%, rgba(124,92,255,.25), transparent 60%),
+        radial-gradient(700px 360px at 85% 20%, rgba(0,212,255,.18), transparent 55%),
+        radial-gradient(650px 420px at 40% 92%, rgba(124,92,255,.12), transparent 60%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max);margin:0 auto;padding:0 18px}
+    .sr-only{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+    /* Topbar */
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter: blur(14px);
+      background: rgba(7,10,15,.62);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;gap:12px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:900;letter-spacing:.3px;
+    }
+    .logo{
+      width:34px;height:34px;border-radius:12px;
+      background:
+        radial-gradient(10px 10px at 30% 30%, rgba(255,255,255,.9), transparent 55%),
+        linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 10px 28px rgba(124,92,255,.25);
+    }
+    .pill{
+      font-size:12px;padding:4px 10px;border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+    }
+    .navlinks{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .navlinks a{
+      padding:10px 12px;border-radius:12px;
+      color:var(--muted);
+      border:1px solid transparent;
+    }
+    .navlinks a:hover{color:var(--text);border-color:var(--border);background:rgba(255,255,255,.04)}
+    .navlinks a.active{
+      color:var(--text);
+      border-color:rgba(124,92,255,.35);
+      background:rgba(124,92,255,.12);
+    }
+
+    /* Buttons */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:12px 14px;border-radius:14px;border:1px solid var(--border);
+      background:rgba(255,255,255,.04);color:var(--text);
+      cursor:pointer;
+      transition:transform .12s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease;
+      user-select:none;white-space:nowrap;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 10px 28px rgba(0,0,0,.25);
+    }
+    .btn.primary{
+      border-color:rgba(124,92,255,.55);
+      background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(0,212,255,.12));
+      box-shadow: 0 18px 46px rgba(124,92,255,.18);
+    }
+    .btn.primary:hover{
+      border-color: rgba(0,212,255,.45);
+      background: linear-gradient(135deg, rgba(124,92,255,.30), rgba(0,212,255,.16));
+    }
+    .btn.small{padding:10px 12px;border-radius:12px;font-size:14px}
+    .btn.ghost{background:transparent}
+    .btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+
+    /* Hero */
+    .hero{padding:46px 0 18px}
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .heroCard{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .heroCard::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(500px 220px at 20% 10%, rgba(124,92,255,.25), transparent 60%),
+        radial-gradient(400px 200px at 85% 20%, rgba(0,212,255,.18), transparent 55%);
+      pointer-events:none;
+      filter: blur(10px);
+      opacity:.9;
+    }
+    .heroInner{position:relative;padding:26px}
+    .hTitle{
+      font-size: clamp(28px, 3.5vw, 46px);
+      line-height: 1.04;
+      margin:0 0 10px;
+      letter-spacing: -0.02em;
+    }
+    .hTitle b{
+      background: linear-gradient(135deg, #ffffff, rgba(255,255,255,.55));
+      -webkit-background-clip:text; background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .hTitle .glow{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text; background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow: 0 0 24px rgba(124,92,255,.25);
+    }
+    .hSub{margin:0 0 16px;color:var(--muted);max-width:70ch}
+    .heroActions{display:flex;gap:10px;flex-wrap:wrap}
+    .heroMeta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .chip{
+      font-size:13px;
+      color:rgba(234,240,255,.78);
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      padding:8px 10px;
+      border-radius:999px;
+    }
+
+    /* Notice */
+    .notice{
+      margin-top:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding:12px 12px;
+      display:flex;gap:10px;align-items:flex-start;
+      color: rgba(234,240,255,.8);
+    }
+    .notice b{color:var(--text)}
+    .notice .dot{
+      width:10px;height:10px;border-radius:999px;margin-top:5px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 18px rgba(124,92,255,.35);
+      flex:0 0 auto;
+    }
+
+    /* Side card */
+    .sideCard{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius2);
+      overflow:hidden;
+    }
+    .sideInner{padding:20px}
+    .sideTitle{margin:0 0 8px;font-size:16px}
+    .sideText{margin:0 0 14px;color:var(--muted);font-size:14px}
+    .search{
+      display:flex;gap:10px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      border-radius:14px;
+      padding:10px;
+      align-items:center;
+    }
+    .search input{
+      width:100%;
+      border:0; outline:0;
+      background: transparent;
+      color: var(--text);
+      font-size:14px;
+    }
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    select{
+      appearance:none;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      outline:none;
+      width:100%;
+    }
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .hint{
+      margin-top:12px;
+      font-size:13px;
+      color: var(--muted);
+      line-height:1.35;
+    }
+
+    /* Sections */
+    .section{padding:16px 0 52px}
+    .sectionHead{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      margin: 10px 0 14px;
+    }
+    .sectionHead h2{margin:0;font-size:18px;letter-spacing:.2px}
+    .sectionHead p{margin:0;color:var(--muted);font-size:14px}
+
+    /* Cards grid */
+    .grid{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:14px}
+    .card{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      overflow:hidden;
+      transition: transform .14s ease, border-color .14s ease, background .14s ease;
+      box-shadow: 0 18px 40px rgba(0,0,0,.25);
+    }
+    .card:hover{transform:translateY(-3px);border-color:rgba(124,92,255,.35);background:rgba(255,255,255,.06)}
+    .thumb{
+      aspect-ratio:16/9;
+      width:100%;
+      background:
+        radial-gradient(400px 200px at 15% 20%, rgba(124,92,255,.35), transparent 60%),
+        radial-gradient(320px 160px at 85% 30%, rgba(0,212,255,.25), transparent 58%),
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border-bottom:1px solid var(--border);
+      position:relative;
+    }
+    .badge{
+      position:absolute;left:12px;top:12px;
+      font-size:12px;padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(0,0,0,.25);
+      color:rgba(234,240,255,.85);
+    }
+    .cardBody{padding:14px}
+    .cardTitle{margin:0 0 6px;font-size:16px}
+    .cardDesc{margin:0 0 12px;color:var(--muted);font-size:14px;line-height:1.35}
+    .cardActions{display:flex;gap:10px;flex-wrap:wrap}
+
+    /* Tabs */
+    .tabs{display:flex;gap:10px;flex-wrap:wrap}
+    .tabBtn[aria-selected="true"]{border-color:rgba(124,92,255,.45);background:rgba(124,92,255,.12);color:var(--text)}
+    .tabPanel{display:none}
+    .tabPanel.active{display:block}
+
+    /* FAQ */
+    .faq{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius2);
+      overflow:hidden;
+    }
+    details{border-top:1px solid var(--border)}
+    details:first-child{border-top:0}
+    summary{
+      cursor:pointer;
+      padding:16px 16px;
+      list-style:none;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+    }
+    summary::-webkit-details-marker{display:none}
+    summary span{font-weight:650}
+    .faq p{margin:0;padding:0 16px 16px;color:var(--muted);line-height:1.45}
+    .caret{
+      width:10px;height:10px;border-right:2px solid rgba(234,240,255,.8);border-bottom:2px solid rgba(234,240,255,.8);
+      transform:rotate(45deg);transition:transform .15s ease;
+    }
+    details[open] .caret{transform:rotate(225deg)}
+
+    /* Footer */
+    footer{
+      border-top:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      padding:22px 0 36px;
+      color: rgba(234,240,255,.7);
+      font-size:14px;
+    }
+    .footGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:start}
+    .footLinks{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+    .footLinks a{padding:8px 10px;border-radius:12px;border:1px solid transparent}
+    .footLinks a:hover{border-color:var(--border);background:rgba(255,255,255,.04);color:var(--text)}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .heroGrid{grid-template-columns:1fr}
+      .grid{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .footGrid{grid-template-columns:1fr}
+      .footLinks{justify-content:flex-start}
+      .row{grid-template-columns:1fr}
+    }
+    @media (max-width: 640px){
+      .grid{grid-template-columns:1fr}
+      .nav{gap:10px}
+      .navlinks a{padding:9px 10px}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#home" aria-label="Startseite">
+          <div class="logo" aria-hidden="true"></div>
+          <span>FREE HUB</span>
+          <span class="pill">Downloads</span>
+        </a>
+
+        <nav class="navlinks" aria-label="Hauptnavigation">
+          <a class="active" href="#home">Home</a>
+          <a href="#downloads">Downloads</a>
+          <a href="#faq">FAQ</a>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="container">
+        <div class="heroGrid">
+          <div class="heroCard">
+            <div class="heroInner">
+              <h1 class="hTitle">
+                <b>Kostenlose</b> <span class="glow">Downloads</span><br/>
+                übersichtlich gelistet
+              </h1>
+              <p class="hSub">
+                Modernes Dark-Design wie bei “Scooby”, aber als <b>Free Library</b>: Karten, Suche, Kategorien und FAQ.
+                Du kannst die Demo-Einträge später durch deine eigenen Downloads ersetzen (z. B. Singleplayer-Mods, Tools, Presets).
+              </p>
+
+              <div class="heroActions">
+                <a class="btn primary" href="#downloads">Jetzt stöbern</a>
+                <a class="btn" href="#faq">FAQ</a>
+              </div>
+
+              <div class="heroMeta">
+                <span class="chip">✨ Modernes UI</span>
+                <span class="chip">🔎 Suche + Filter</span>
+                <span class="chip">📦 Free Downloads</span>
+                <span class="chip">📱 Mobile Ready</span>
+              </div>
+
+              <div class="notice" role="note" aria-label="Hinweis">
+                <div class="dot" aria-hidden="true"></div>
+                <div>
+                  <b>Hinweis:</b> Diese Seite ist als Vorlage für <b>legitime</b> Inhalte gedacht (z. B. Singleplayer/Offline).
+                  Online-Cheats/Griefing werden nicht unterstützt.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="sideCard" aria-label="Suche und Filter">
+            <div class="sideInner">
+              <h3 class="sideTitle">Suchen & Filtern</h3>
+              <p class="sideText">Finde Einträge sofort in der Übersicht (Demo-Daten).</p>
+
+              <div class="search">
+                <span aria-hidden="true">🔎</span>
+                <input id="q" type="search" placeholder="Suchen… z. B. 'preset', 'tool'…" />
+              </div>
+
+              <div class="filters">
+                <div class="row">
+                  <label>
+                    <span class="sr-only">Kategorie</span>
+                    <select id="cat">
+                      <option value="">Kategorie: Alle</option>
+                      <option value="singleplayer">Singleplayer</option>
+                      <option value="tools">Tools</option>
+                      <option value="graphics">Graphics</option>
+                      <option value="misc">Misc</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span class="sr-only">Sortierung</span>
+                    <select id="sort">
+                      <option value="new">Sort: Neu zuerst</option>
+                      <option value="az">Sort: A–Z</option>
+                    </select>
+                  </label>
+                </div>
+
+                <button class="btn small" id="reset" type="button">Zurücksetzen</button>
+              </div>
+
+              <div class="hint">
+                Tipp: Später kannst du hier zusätzlich Tags, “Verified”-Badges oder “Letztes Update” anzeigen.
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="downloads">
+      <div class="container">
+        <div class="sectionHead">
+          <div>
+            <h2>Downloads</h2>
+            <p>Karten-Layout (Thumbnail, Kurzinfo, kostenloser Download-Link).</p>
+          </div>
+          <div class="tabs" role="tablist" aria-label="Ansicht wechseln">
+            <button class="btn small tabBtn" role="tab" aria-selected="true" aria-controls="panel-all" id="tab-all" type="button">Alle</button>
+            <button class="btn small tabBtn" role="tab" aria-selected="false" aria-controls="panel-featured" id="tab-featured" type="button">Featured</button>
+          </div>
+        </div>
+
+        <div id="panel-all" class="tabPanel active" role="tabpanel" aria-labelledby="tab-all">
+          <div class="grid" id="grid"></div>
+        </div>
+
+        <div id="panel-featured" class="tabPanel" role="tabpanel" aria-labelledby="tab-featured">
+          <div class="grid" id="gridFeatured"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="sectionHead">
+          <div>
+            <h2>FAQ</h2>
+            <p>Häufige Fragen (Accordion).</p>
+          </div>
+        </div>
+
+        <div class="faq">
+          <details open>
+            <summary><span>Wie lade ich etwas herunter?</span><i class="caret" aria-hidden="true"></i></summary>
+            <p>Klicke bei einem Eintrag auf <b>Download</b>. In dieser Demo sind alle Links Platzhalter.</p>
+          </details>
+          <details>
+            <summary><span>Kann ich eigene Einträge hinzufügen?</span><i class="caret" aria-hidden="true"></i></summary>
+            <p>Ja. Die Einträge kommen hier aus einer JavaScript-Liste. Später kannst du das durch WordPress/CMS ersetzen.</p>
+          </details>
+          <details>
+            <summary><span>Gibt es “Verified”-Downloads?</span><i class="caret" aria-hidden="true"></i></summary>
+            <p>Das kannst du als Tag/Badge ergänzen (z. B. “Verified”, “Updated”, “Safe”).</p>
+          </details>
+          <details>
+            <summary><span>Gibt es eine Anleitung/Guides?</span><i class="caret" aria-hidden="true"></i></summary>
+            <p>Ja – du kannst später eine Guides-Seite ergänzen (Installationshilfe, Troubleshooting etc.).</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kontakt">
+      <div class="container">
+        <div class="sectionHead">
+          <div>
+            <h2>Kontakt</h2>
+            <p>Platzhalter – später Formular oder Discord-Link.</p>
+          </div>
+        </div>
+
+        <div class="heroCard" style="box-shadow:0 16px 50px rgba(0,0,0,.35);">
+          <div class="heroInner">
+            <p style="margin:0 0 10px;color:var(--muted);">
+              Hier kannst du Support/Feedback sammeln. Beispiel: Discord-Invite, E-Mail oder Formular.
+            </p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="btn primary" href="mailto:kontakt@deine-domain.tld">E-Mail</a>
+              <a class="btn" href="#downloads">Zurück zu Downloads</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footGrid">
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+            <div class="logo" aria-hidden="true"></div>
+            <strong>FREE HUB</strong>
+            <span class="pill">Darkmode</span>
+          </div>
+          <div>Impressum • Datenschutz • Terms</div>
+          <div style="margin-top:8px;font-size:13px;">
+            Demo-Startseite. Ersetze die Einträge/Links durch deine eigenen Inhalte.
+          </div>
+        </div>
+        <div class="footLinks">
+          <a href="#home">Home</a>
+          <a href="#downloads">Downloads</a>
+          <a href="#faq">FAQ</a>
+          <a href="#kontakt">Kontakt</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Demo-Daten (ersetzen)
+    const items = [
+      {
+        id:"sp-pack-1",
+        title:"Singleplayer Mod Pack (Demo)",
+        badge:"Singleplayer",
+        cat:"singleplayer",
+        featured:true,
+        desc:"Beispiel-Eintrag: Mod/Pack für Offline/Singleplayer.",
+        updated:"2026-01-28",
+        download:"#"
+      },
+      {
+        id:"tool-setup",
+        title:"Setup Utility (Demo)",
+        badge:"Tools",
+        cat:"tools",
+        featured:false,
+        desc:"Beispiel-Eintrag: kleines Tool (Installer/Helper).",
+        updated:"2026-01-10",
+        download:"#"
+      },
+      {
+        id:"gfx-preset",
+        title:"Graphics Preset (Demo)",
+        badge:"Graphics",
+        cat:"graphics",
+        featured:true,
+        desc:"Beispiel-Eintrag: Presets/Reshade/Visuals.",
+        updated:"2025-12-02",
+        download:"#"
+      },
+      {
+        id:"misc-guide",
+        title:"Optional Files (Demo)",
+        badge:"Misc",
+        cat:"misc",
+        featured:false,
+        desc:"Beispiel-Eintrag: Zusatzdateien oder Ressourcen.",
+        updated:"2025-11-18",
+        download:"#"
+      },
+      {
+        id:"tool-clean",
+        title:"Performance Helper (Demo)",
+        badge:"Tools",
+        cat:"tools",
+        featured:false,
+        desc:"Beispiel-Eintrag: Performance/Config Helper.",
+        updated:"2025-10-05",
+        download:"#"
+      },
+      {
+        id:"gfx-lite",
+        title:"Light Preset (Demo)",
+        badge:"Graphics",
+        cat:"graphics",
+        featured:false,
+        desc:"Beispiel-Eintrag: leichteres Preset für schwächere PCs.",
+        updated:"2025-09-12",
+        download:"#"
+      }
+    ];
+
+    // Tabs
+    const tabs = [
+      {btn: document.getElementById("tab-all"), panel: document.getElementById("panel-all")},
+      {btn: document.getElementById("tab-featured"), panel: document.getElementById("panel-featured")}
+    ];
+    tabs.forEach(({btn, panel}) => {
+      btn.addEventListener("click", () => {
+        tabs.forEach(t => {
+          t.btn.setAttribute("aria-selected", "false");
+          t.panel.classList.remove("active");
+        });
+        btn.setAttribute("aria-selected", "true");
+        panel.classList.add("active");
+      });
+    });
+
+    const grid = document.getElementById("grid");
+    const gridFeatured = document.getElementById("gridFeatured");
+
+    function cardTemplate(item){
+      const wrap = document.createElement("article");
+      wrap.className = "card";
+      wrap.dataset.cat = item.cat;
+      wrap.dataset.title = item.title.toLowerCase();
+      wrap.dataset.desc = item.desc.toLowerCase();
+
+      wrap.innerHTML = `
+        <div class="thumb">
+          <div class="badge">${item.badge}</div>
+        </div>
+        <div class="cardBody">
+          <h3 class="cardTitle">${item.title}</h3>
+          <p class="cardDesc">${item.desc}</p>
+          <div class="cardActions">
+            <a class="btn small primary" href="${item.download}" target="_blank" rel="noopener">Download</a>
+            <a class="btn small" href="#faq">Info</a>
+          </div>
+        </div>
+      `;
+      return wrap;
+    }
+
+    function render(list){
+      grid.innerHTML = "";
+      list.forEach(item => grid.appendChild(cardTemplate(item)));
+
+      gridFeatured.innerHTML = "";
+      list.filter(i => i.featured).forEach(item => gridFeatured.appendChild(cardTemplate(item)));
+    }
+
+    // Search + filter + sort
+    const q = document.getElementById("q");
+    const cat = document.getElementById("cat");
+    const sort = document.getElementById("sort");
+    const reset = document.getElementById("reset");
+
+    function applyFilters(){
+      const term = (q.value || "").trim().toLowerCase();
+      const c = cat.value;
+
+      let out = items.slice();
+
+      if(term){
+        out = out.filter(i => (i.title + " " + i.desc + " " + i.badge).toLowerCase().includes(term));
+      }
+      if(c){
+        out = out.filter(i => i.cat === c);
+      }
+      if(sort.value === "az"){
+        out.sort((a,b) => a.title.localeCompare(b.title, "de"));
+      }else{
+        out.sort((a,b) => (b.updated||"").localeCompare(a.updated||""));
+      }
+      render(out);
+    }
+
+    [q,cat,sort].forEach(el => el.addEventListener("input", applyFilters));
+    reset.addEventListener("click", () => {
+      q.value=""; cat.value=""; sort.value="new";
+      applyFilters();
+    });
+
+    applyFilters();
+  </script>
+</body>
+</html>
