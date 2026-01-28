@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LucaModzz Admin Panel</title>
+    <style>
+        body { background-color: #0f0f13; color: white; font-family: 'Segoe UI', sans-serif; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; flex-direction: column; }
+        .container { width: 100%; max-width: 900px; display: none; } /* Standardmäßig versteckt */
+        
+        /* Login Styles */
+        #login-screen { text-align: center; background: #1a1a20; padding: 40px; border-radius: 10px; border: 1px solid #333; }
+        #login-screen input { padding: 10px; width: 200px; margin-bottom: 10px; border-radius: 5px; border: none; }
+        #login-screen button { padding: 10px 20px; background: #8a2be2; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        
+        h1 { color: #8a2be2; text-align: center; margin-bottom: 30px; }
+        h2 { border-bottom: 2px solid #333; padding-bottom: 10px; margin-top: 40px; color: #ccc; }
+        
+        .input-group { background: #1a1a20; padding: 20px; border-radius: 10px; border: 1px solid #333; margin-bottom: 20px; }
+        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 15px; background: #0f0f13; border: 1px solid #444; color: white; border-radius: 5px; font-size: 1rem; box-sizing: border-box; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #8a2be2; }
+
+        .btn { padding: 12px 25px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: 0.3s; color: white; }
+        .btn-add { background: #8a2be2; width: 100%; }
+        .btn-add:hover { background: #691bb8; }
+        .btn-copy { background: #00e676; margin-top: 10px; color: #000; }
+        .btn-load { background: #29b6f6; color: #000; margin-bottom: 10px; }
+        .btn-delete { background: #ff3d00; padding: 5px 10px; font-size: 0.8rem; margin-left: 10px; }
+
+        .preview-item { background: #1a1a20; padding: 15px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #8a2be2; }
+        .status-badge { padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; margin-left: 10px; color: #000; font-weight: bold;}
+        .output-box { width: 100%; height: 150px; background: #222; color: #0f0; font-family: monospace; border: 1px solid #444; padding: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen">
+        <h2 style="border:none; margin-top:0;">Admin Login</h2>
+        <input type="password" id="passwordInput" placeholder="Passwort eingeben">
+        <br>
+        <button onclick="checkPassword()">Einloggen</button>
+        <p id="errorMsg" style="color: red; display: none; margin-top: 10px;">Falsches Passwort!</p>
+    </div>
+
+    <div class="container" id="dashboard">
+        <h1>Admin Dashboard</h1>
+
+        <h2>1. Bestehende Liste laden</h2>
+        <p style="color: #aaa; margin-bottom: 10px;">Gehe auf deine Website -> data.json -> Kopiere alles -> Hier einfügen.</p>
+        <textarea id="importArea" rows="3" placeholder="JSON Code hier einfügen..."></textarea>
+        <button class="btn btn-load" onclick="loadFromInput()">Laden</button>
+
+        <h2>2. Menü Bearbeiten</h2>
+        <div class="input-group">
+            <label>Name</label> <input type="text" id="inpName">
+            <label>Bild URL</label> <input type="text" id="inpImg">
+            <label>Beschreibung</label> <textarea id="inpDesc" rows="2"></textarea>
+            <label>Status</label> 
+            <select id="inpStatus">
+                <option value="safe">Safe</option>
+                <option value="updating">Updating</option>
+                <option value="unsafe">Unsafe</option>
+            </select>
+            <label>Link</label> <input type="text" id="inpLink">
+            <button class="btn btn-add" onclick="addItem()">Hinzufügen</button>
+        </div>
+
+        <h2>3. Vorschau</h2>
+        <div id="previewList"></div>
+
+        <h2>4. Code für GitHub</h2>
+        <textarea id="finalOutput" class="output-box" readonly></textarea>
+        <button class="btn btn-copy" onclick="copyCode()">Code Kopieren</button>
+        
+        <p style="margin-top: 20px; color: #aaa; font-size: 0.9rem;">
+            ⚠️ <b>Wichtig:</b> GitHub Pages kann nicht automatisch speichern. <br>
+            Du musst diesen Code kopieren und manuell in die Datei <b>data.json</b> auf GitHub einfügen.
+        </p>
+    </div>
+
+    <script>
+        // --- PASSWORT KONFIGURATION ---
+        const MY_PASSWORD = "luca"; // Ändere das hier zu deinem Wunsch-Passwort!
+
+        function checkPassword() {
+            const input = document.getElementById("passwordInput").value;
+            if(input === MY_PASSWORD) {
+                document.getElementById("login-screen").style.display = "none";
+                document.getElementById("dashboard").style.display = "block";
+            } else {
+                document.getElementById("errorMsg").style.display = "block";
+            }
+        }
+
+        // --- DASHBOARD LOGIK ---
+        let menus = [];
+
+        function renderList() {
+            const listContainer = document.getElementById("previewList");
+            listContainer.innerHTML = "";
+            menus.forEach((menu, index) => {
+                let color = '#fff';
+                if(menu.status === 'safe') color = '#00e676';
+                if(menu.status === 'unsafe') color = '#ff3d00';
+                if(menu.status === 'updating') color = '#ffea00';
+
+                listContainer.innerHTML += `
+                    <div class="preview-item">
+                        <div><strong>${menu.name}</strong> <span class="status-badge" style="background:${color}">${menu.status}</span></div>
+                        <button class="btn btn-delete" onclick="deleteItem(${index})">X</button>
+                    </div>`;
+            });
+            document.getElementById("finalOutput").value = JSON.stringify(menus, null, 2);
+        }
+
+        function addItem() {
+            menus.push({
+                id: Date.now(),
+                name: document.getElementById("inpName").value,
+                image: document.getElementById("inpImg").value || "https://via.placeholder.com/300x180",
+                description: document.getElementById("inpDesc").value,
+                status: document.getElementById("inpStatus").value,
+                link: document.getElementById("inpLink").value || "#"
+            });
+            renderList();
+            document.getElementById("inpName").value = "";
+            document.getElementById("inpDesc").value = "";
+        }
+
+        function deleteItem(index) { menus.splice(index, 1); renderList(); }
+        
+        function loadFromInput() {
+            try { menus = JSON.parse(document.getElementById("importArea").value); renderList(); } 
+            catch (e) { alert("Ungültiger JSON Code!"); }
+        }
+
+        function copyCode() {
+            document.getElementById("finalOutput").select();
+            document.execCommand("copy");
+            alert("Kopiert! Füge es jetzt auf GitHub ein.");
+        }
+    </script>
+</body>
+</html>
