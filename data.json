@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "YimMenu",
+    "image": "https://i.imgur.com/yourimage.jpg",
+    "description": "Das beste kostenlose Menü nach Kiddions. Sehr stabil.",
+    "status": "safe",
+    "link": "https://github.com/YimMenu/YimMenu"
+  },
+  {
+    "id": 2,
+    "name": "Cherax",
+    "image": "https://i.imgur.com/anotherimage.jpg",
+    "description": "Sehr gute Protection und aggressives HvH.",
+    "status": "safe",
+    "link": "https://cherax.menu"
+  },
+  {
+    "id": 3,
+    "name": "ThunderX",
+    "image": "https://i.imgur.com/sample.jpg",
+    "description": "Neues kostenloses Menü, noch in der Testphase.",
+    "status": "updating",
+    "link": "#"
+  }
+]
